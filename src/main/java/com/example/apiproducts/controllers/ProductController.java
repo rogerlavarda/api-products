@@ -1,6 +1,6 @@
 package com.example.apiproducts.controllers;
 
-import com.example.apiproducts.dtos.ProductRecordDto;
+import com.example.apiproducts.dtos.ProductRecordDTO;
 import com.example.apiproducts.models.ProductModel;
 import com.example.apiproducts.repositories.ProductRepository;
 import jakarta.validation.Valid;
@@ -23,7 +23,7 @@ public class ProductController {
     ProductRepository productRepository;
 
     @PostMapping("/products")
-    public ResponseEntity<ProductModel> saveProduct(@RequestBody @Valid ProductRecordDto productRecordDto){
+    public ResponseEntity<ProductModel> saveProduct(@RequestBody @Valid ProductRecordDTO productRecordDto){
         var productModel = new ProductModel();
         BeanUtils.copyProperties(productRecordDto, productModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(productRepository.save(productModel));
@@ -53,7 +53,7 @@ public class ProductController {
 
     @PutMapping("/products/{id}")
     public ResponseEntity<Object> updateProduct(@PathVariable(value = "id") UUID id,
-                                                 @RequestBody @Valid ProductRecordDto productRecordDto){
+                                                 @RequestBody @Valid ProductRecordDTO productRecordDto){
         Optional<ProductModel> productO = productRepository.findById(id);
         if (productO.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found.");
